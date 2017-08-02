@@ -6,20 +6,21 @@ var fs = require("fs");
 var app = express();
 var port = process.env.PORT || 3000;
 
-var waitList = apiData("waitList.json");
-var tables = [];
+var waitList;
+var tables;
 
 // apiData("tables.json", tables);
 apiData("waitList.json");
 
 function apiData(file){
-	fs.readFile( file, "utf8", function(error, data) {
-		return JSON.parse(data);
+	fs.readFile(file, "utf8", function(error, data) {
+		if (error) return console.log(error);
+		waitList = JSON.parse(data);
+		console.log(waitList);
 	});
 }
 
-if(waitList === undefined) waitList = [];
-console.log(waitList);
+
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
